@@ -15,14 +15,13 @@ const BugWorkflow: React.FC = () => {
   const { context: { stateStatus } } = current
 
   return (
-    <React.Fragment>
-      <div>current state: {current.value}</div>
+    <div className="container mx-auto">
       {(current.matches('new') || stateStatus['new']) && <CreateBug submitBug={state => sendState('CREATE', state)} context={current.context} />}
-      {(current.matches('triage') || stateStatus['triage']) && <AnalyzeBug acceptBug={() => sendState('ACCEPT')} rejectBug={(reason) => sendState('REJECT',  {rejectedReason: reason}) }/>}
-      {(current.matches('open') || stateStatus['open']) && <AssignOwner assignOwner={(value) => sendState('INPROCESS', { owner: value })} />}
-      {(current.matches('process') || stateStatus['process']) && <ProcessBug done={() => sendState('REVIEW')} />}
-      {(current.matches('review') || stateStatus['review']) && <CloseBug close={() => sendState('REVIEW')} />}
-    </React.Fragment>
+      {(current.matches('triage') || stateStatus['triage']) && <AnalyzeBug acceptBug={() => sendState('ACCEPT')} rejectBug={(reason) => sendState('REJECT',  {rejectedReason: reason}) } context={current.context}/>}
+      {(current.matches('open') || stateStatus['open']) && <AssignOwner assignOwner={(value) => sendState('INPROCESS', { owner: value })} context={current.context}/>}
+      {(current.matches('process') || stateStatus['process']) && <ProcessBug done={() => sendState('REVIEW')} context={current.context}/>}
+      {(current.matches('review') || stateStatus['review']) && <CloseBug close={() => sendState('DONE')} context={current.context}/>}
+    </div>
   )
 };
 

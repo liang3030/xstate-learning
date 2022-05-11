@@ -1,14 +1,22 @@
 import * as React from 'react';
 
+import { IContext } from './../../utils/machine';
 import Button from '../../component/Button';
+import Title from './../../component/Title'
 
 
-const CloseBug = ({ close }: { close: () => void }) => { 
+const CloseBug = ({ close, context }: { close: () => void; context: IContext }) => { 
 
   return (
-    <React.Fragment>
-      <Button text={'close'} onClick={_ => close()} />
-    </React.Fragment>
+    <>
+      <Title text={`05 Review and close bug`} />
+      {context.stateStatus['close']
+        ? <div>bug is done/close</div>
+        : <React.Fragment>
+            <Button text={'close'} onClick={_ => close()} />
+          </React.Fragment>
+      }
+    </>
   )
 }
 

@@ -4,8 +4,7 @@ import { IContext } from './../../utils/machine';
 import Input from './../../component/Input'
 import Textarea from './../../component/Textarea';
 import Button from './../../component/Button';
-
-import AccordionItem from '../../component/AccordionItem';
+import Title from './../../component/Title'
 
 const createBugReducer = (
   state: { version: string; reproduce: string; expected: string },
@@ -24,39 +23,49 @@ const createBugReducer = (
 const CreateBug = ({ submitBug, context }: { submitBug: (state: Record<string, string>) => void, context: IContext}) => { 
   const [state, dispatch] = React.useReducer(createBugReducer, {version: '', reproduce: '', expected: ''})
   return (
-    context.stateStatus['new'] ? (<div>{context.createRequirement.version}</div>): 
-    <React.Fragment>
-      <Input
-        type={'text'}
-        htmlFor={'version'}
-        id={'version'}
-        name={'version'}
-        label={'version'}
-        value={state.version}
-        onChange={value => dispatch({ type: 'edit', payload: {'version': value}})}
-      />
-      <Textarea
-        placeholder={'reproduce steps'}
-        htmlFor={'reproduce'}
-        id={'reproduce'}
-        name={'reproduce'}
-        label={'reproduce'}
-        value={state.reproduce}
-        onChange={value => dispatch({ type: 'edit', payload: {'reproduce': value}})}
-
-      />
-      <Textarea
-        placeholder={'expected result'}
-        htmlFor={'expected'}
-        id={'expected'}
-        name={'expected'}
-        label={'expected'}
-        value={state.expected}
-        onChange={value => dispatch({ type: 'edit', payload: {'expected': value}})}
-      />
-      <Button text={'save'} onClick={_ => submitBug(state)}/>
-    </React.Fragment>
+    <>
+    <Title text={`01 Create bug`} />
+      {
+        context.stateStatus['new']
+          ? <>
+              <div>Version: {context.createRequirement.version}</div>
+              <div>reproduce: {context.createRequirement.reproduce}</div>
+              <div>expected: {context.createRequirement.expected}</div>
+            </>
+          : <React.Fragment>
+              <Input
+                type={'text'}
+                htmlFor={'version'}
+                id={'version'}
+                name={'version'}
+                label={'version'}
+                value={state.version}
+                onChange={value => dispatch({ type: 'edit', payload: {'version': value}})}
+              />
+              <Textarea
+                placeholder={'reproduce steps'}
+                htmlFor={'reproduce'}
+                id={'reproduce'}
+                name={'reproduce'}
+                label={'reproduce'}
+                value={state.reproduce}
+                onChange={value => dispatch({ type: 'edit', payload: {'reproduce': value}})}
+              />
+              <Textarea
+                placeholder={'expected result'}
+                htmlFor={'expected'}
+                id={'expected'}
+                name={'expected'}
+                label={'expected'}
+                value={state.expected}
+                onChange={value => dispatch({ type: 'edit', payload: {'expected': value}})}
+              />
+              <Button text={'save'} onClick={_ => submitBug(state)}/>
+            </React.Fragment>
+      }
+  </>
   )
+ 
 }
 
 export default CreateBug;

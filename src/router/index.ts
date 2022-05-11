@@ -3,13 +3,13 @@ import ProcessWorkflow from '../pages/ProcessWorkflow';
 
 const routes = [
   {
-    path: '/',
-    Component: ProcessWorkflow
+    path: '/xstate-learning/example',
+    Component: BugWorkflow,
   },
   {
-    path: '/example',
-    Component: BugWorkflow
-  }
+    path: '/xstate-learning',
+    Component: ProcessWorkflow
+  },
 ]
 
 export default routes
